@@ -93,7 +93,7 @@ create table invoice (
 	billing_country VARCHAR(50) NOT NULL,
 	billing_zip VARCHAR(50) NOT NULL,
 	constraint fk_6
-		foreign key (customer_id) references customer (customer_id)
+		foreign key (customer_id) references customers (customer_id)
 );
 create table invoice_line (
 	invoice_line_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -129,16 +129,16 @@ create table reviews (
 	constraint fk_11
 		foreign key (product_id) references products (product_id),
 	constraint fk_12
-		foreign key (customer_id) references customer (customer_id)
+		foreign key (customer_id) references customers (customer_id)
 );
 
 insert into sales_rep
 	(sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code)
 values
-	(1, 'Trista', 'Baumer', 'tbaumer0@cornell.edu', '1999-12-29', '999-856-4450', '525-783-3821', '8124 Lukken Drive', 'Litvínov', null, 'Czech Republic', '64539');
-	(2, 'Dur', 'Chappell', 'dchappell1@statcounter.com', '1999-12-23', '710-152-0535', '372-413-1439', '1 7th Place', 'Huangduobu', null, 'China', '15307');
-	(3, 'Mohammed', 'Devonside', 'mdevonside2@gravatar.com', '2000-6-23', '421-979-0222', '202-683-0562', '2102 Loomis Hill', 'Ustyuzhna', null, 'Russia', '42159');
-	(4, 'Rollie', 'Ekless', 'rekless3@squidoo.com', '1999-11-29', '987-138-7697', '801-801-8301', '25 Jenifer Hill', 'Nadvoitsy', null, 'Russia', '92119');
+	(1, 'Trista', 'Baumer', 'tbaumer0@cornell.edu', '1999-12-29', '999-856-4450', '525-783-3821', '8124 Lukken Drive', 'Litvínov', null, 'Czech Republic', '64539'),
+	(2, 'Dur', 'Chappell', 'dchappell1@statcounter.com', '1999-12-23', '710-152-0535', '372-413-1439', '1 7th Place', 'Huangduobu', null, 'China', '15307'),
+	(3, 'Mohammed', 'Devonside', 'mdevonside2@gravatar.com', '2000-6-23', '421-979-0222', '202-683-0562', '2102 Loomis Hill', 'Ustyuzhna', null, 'Russia', '42159'),
+	(4, 'Rollie', 'Ekless', 'rekless3@squidoo.com', '1999-11-29', '987-138-7697', '801-801-8301', '25 Jenifer Hill', 'Nadvoitsy', null, 'Russia', '92119'),
 	(5,  'Edd', 'Shillaker', 'eshillaker4@liveinternet.ru', '1999-12-11', '845-244-7298', '951-875-5383', '6 Summerview Crossing', 'Nārāyanganj', null, 'Bangladesh', '19395');
 
 insert into supplier (supplier_id, first_name, last_name, phone, fax, email) values (1, 'Marinna', 'Swindles', '562-273-5187', '499-453-2012', 'mswindles0@foxnews.com');
@@ -178,11 +178,11 @@ insert into category_product (product_id, category_id) values (3, 3);
 insert into category_product (product_id, category_id) values (4, 4);
 insert into category_product (product_id, category_id) values (5, 5);
 
-insert into customer (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (1, 'Pearl', 'Spillane', '12 Scofield Street', 'Turt', null, 'Mongolia', '04302', '860-596-5229', 'pspillane0@ft.com', '770-189-8031');
-insert into customer (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (2, 'Lorrie', 'Gillman', '3 Butterfield Court', 'Dallas', 'Texas', 'United States', '45031', '972-659-2415', 'lgillman1@huffingtonpost.com', '708-872-9837');
-insert into customer (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (3, 'Sean', 'Whitticks', '5950 Havey Crossing', 'Busdi', null, 'Philippines', '76592', '431-727-6468', 'swhitticks2@mysql.com', '915-317-9974');
-insert into customer (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (4, 'Sheff', 'Balnave', '7 Hauk Lane', 'Takamatsu-shi', null, 'Japan', '86274', '463-884-8386', 'sbalnave3@slideshare.net', '401-561-0785');
-insert into customer (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (5, 'Nickolaus', 'MacGaughie', '4 Wayridge Street', 'Dajing', null, 'China', '64738', '763-779-0176', 'nmacgaughie4@forbes.com', '372-397-2821');
+insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (1, 'Pearl', 'Spillane', '12 Scofield Street', 'Turt', null, 'Mongolia', '04302', '860-596-5229', 'pspillane0@ft.com', '770-189-8031');
+insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (2, 'Lorrie', 'Gillman', '3 Butterfield Court', 'Dallas', 'Texas', 'United States', '45031', '972-659-2415', 'lgillman1@huffingtonpost.com', '708-872-9837');
+insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (3, 'Sean', 'Whitticks', '5950 Havey Crossing', 'Busdi', null, 'Philippines', '76592', '431-727-6468', 'swhitticks2@mysql.com', '915-317-9974');
+insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (4, 'Sheff', 'Balnave', '7 Hauk Lane', 'Takamatsu-shi', null, 'Japan', '86274', '463-884-8386', 'sbalnave3@slideshare.net', '401-561-0785');
+insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (5, 'Nickolaus', 'MacGaughie', '4 Wayridge Street', 'Dajing', null, 'China', '64738', '763-779-0176', 'nmacgaughie4@forbes.com', '372-397-2821');
 
 insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (1, 1,  '2022-6-25', 5018.71, '06 Hooker Place', 'Sishiba', null, 'China', '63167');
 insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (2, 2,  '2021-1-26', 2917.38, '8 Hanover Junction', 'Baitashan', null, 'China', '10862');
