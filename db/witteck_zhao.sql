@@ -70,7 +70,7 @@ create table supplier_rep (
 		foreign key (sales_rep_id) references sales_rep (sales_rep_id)
 
 );
-create table customer (
+create table customers (
     customer_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	first_name VARCHAR(50) NOT NULL,
 	last_name VARCHAR(50) NOT NULL,
