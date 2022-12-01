@@ -1,5 +1,5 @@
 CREATE DATABASE witteck_zhao_db;
-CREATE USER 'webapp'@'%' IDENTIFIED BY 'abc123';
+
 GRANT ALL PRIVILEGES ON witteck_zhao_db.* TO 'webapp'@'%';
 FLUSH PRIVILEGES;
 
@@ -68,7 +68,6 @@ create table supplier_rep (
 		foreign key (supplier_id) references supplier (supplier_id),
 	constraint fk_5
 		foreign key (sales_rep_id) references sales_rep (sales_rep_id)
-
 );
 create table customers (
     customer_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -83,7 +82,6 @@ create table customers (
 	email VARCHAR(50) NOT NULL,
 	fax VARCHAR(50)
 );
-
 create table invoice (
 	invoice_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	customer_id INTEGER NOT NULL,
@@ -97,7 +95,6 @@ create table invoice (
 	constraint fk_6
 		foreign key (customer_id) references customer (customer_id)
 );
-
 create table invoice_line (
 	invoice_line_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	unit_price DECIMAL(8,2) NOT NULL,
@@ -135,11 +132,14 @@ create table reviews (
 		foreign key (customer_id) references customer (customer_id)
 );
 
-insert into sales_rep (sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code) values (1, 'Trista', 'Baumer', 'tbaumer0@cornell.edu', '1999-12-29', '999-856-4450', '525-783-3821', '8124 Lukken Drive', 'Litvínov', null, 'Czech Republic', '64539');
-insert into sales_rep (sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code) values (2, 'Dur', 'Chappell', 'dchappell1@statcounter.com', '1999-12-23', '710-152-0535', '372-413-1439', '1 7th Place', 'Huangduobu', null, 'China', '15307');
-insert into sales_rep (sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code) values (3, 'Mohammed', 'Devonside', 'mdevonside2@gravatar.com', '2000-6-23', '421-979-0222', '202-683-0562', '2102 Loomis Hill', 'Ustyuzhna', null, 'Russia', '42159');
-insert into sales_rep (sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code) values (4, 'Rollie', 'Ekless', 'rekless3@squidoo.com', '1999-11-29', '987-138-7697', '801-801-8301', '25 Jenifer Hill', 'Nadvoitsy', null, 'Russia', '92119');
-insert into sales_rep (sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code) values (5,  'Edd', 'Shillaker', 'eshillaker4@liveinternet.ru', '1999-12-11', '845-244-7298', '951-875-5383', '6 Summerview Crossing', 'Nārāyanganj', null, 'Bangladesh', '19395');
+insert into sales_rep
+	(sales_rep_id,  first_name, last_name, email, birthday, phone, fax, address, city, state, country, zip_code)
+values
+	(1, 'Trista', 'Baumer', 'tbaumer0@cornell.edu', '1999-12-29', '999-856-4450', '525-783-3821', '8124 Lukken Drive', 'Litvínov', null, 'Czech Republic', '64539');
+	(2, 'Dur', 'Chappell', 'dchappell1@statcounter.com', '1999-12-23', '710-152-0535', '372-413-1439', '1 7th Place', 'Huangduobu', null, 'China', '15307');
+	(3, 'Mohammed', 'Devonside', 'mdevonside2@gravatar.com', '2000-6-23', '421-979-0222', '202-683-0562', '2102 Loomis Hill', 'Ustyuzhna', null, 'Russia', '42159');
+	(4, 'Rollie', 'Ekless', 'rekless3@squidoo.com', '1999-11-29', '987-138-7697', '801-801-8301', '25 Jenifer Hill', 'Nadvoitsy', null, 'Russia', '92119');
+	(5,  'Edd', 'Shillaker', 'eshillaker4@liveinternet.ru', '1999-12-11', '845-244-7298', '951-875-5383', '6 Summerview Crossing', 'Nārāyanganj', null, 'Bangladesh', '19395');
 
 insert into supplier (supplier_id, first_name, last_name, phone, fax, email) values (1, 'Marinna', 'Swindles', '562-273-5187', '499-453-2012', 'mswindles0@foxnews.com');
 insert into supplier (supplier_id, first_name, last_name, phone, fax, email) values (2, 'Vanni', 'Dufton', '477-307-8334', '125-570-5084', 'vdufton1@gravatar.com');

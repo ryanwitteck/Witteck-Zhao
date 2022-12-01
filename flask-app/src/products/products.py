@@ -36,9 +36,9 @@ def get_products():
 def get_most_pop_products():
     cursor = db.get_db().cursor()
     query = '''
-        SELECT p.productCode, productName, sum(quantityOrdered) as totalOrders
-        FROM products p JOIN orderdetails od on p.productCode = od.productCode
-        GROUP BY p.productCode, productName
+        SELECT p.product_id, product_name, sum(quantityOrdered) as totalOrders
+        FROM products p JOIN invoice_line il on p.product_id = il.product_id
+        GROUP BY p.product_id, product_name
         ORDER BY totalOrders DESC
         LIMIT 5;
     '''
