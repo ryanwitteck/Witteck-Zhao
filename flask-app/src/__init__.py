@@ -28,12 +28,14 @@ def create_app():
     from src.views import views
     from src.customers.customers import customers
     from src.products.products  import products
+    from src.products.categories  import categories
     from src.debug  import debug
 
     # Register the routes that we just imported so they can be properly handled
-    app.register_blueprint(views,       url_prefix='/classic')
-    app.register_blueprint(customers,   url_prefix='/classic')
-    app.register_blueprint(products,    url_prefix='/classic')
-    app.register_blueprint(debug,       url_prefix='/classic')
+    app.register_blueprint(views,       url_prefix='/views')
+    app.register_blueprint(customers,   url_prefix='/customers')
+    app.register_blueprint(products,    url_prefix='/products')
+    app.register_blueprint(categories,  url_prefix='/categories')
+    app.register_blueprint(debug,       url_prefix='/debug')
 
     return app
