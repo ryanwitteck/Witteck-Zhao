@@ -36,7 +36,7 @@ def get_specific_product(productID):
 
     return execute_query(query)
 
-# Get a products's categories for product with particular ID -- NOT FULLY TESTED
+# Get a products's categories using its id -- NOT FULLY TESTED
 @products.route('/<pid>/categories', methods=['GET'])
 def get_product_categories(pid):
     query = '''
@@ -48,13 +48,25 @@ def get_product_categories(pid):
     
     return execute_query(query)
 
-# Get a products's reviews for product with particular ID -- DOES NOT QUERY ALL DESIRED INFORMATION
+# Get a products's reviews using its id -- DOES NOT QUERY ALL DESIRED INFORMATION
 @products.route('/<pid>/reviews', methods=['GET'])
 def get_product_reviews(pid):
     query = '''
         SELECT p.product_id, p.product_name, r.review_id
         FROM products p 
         JOIN reviews r ON p.product_id = r.product_id
+        WHERE p.product_id = {0};'''.format(pid)
+    
+    return execute_query(query)
+
+# Get a products's sale data using its id -- DOES NOT QUERY ALL DESIRED INFORMATION
+@products.route('/<pid>/sales-data', methods=['GET'])
+def get_product_sales(pid):
+    query = '''
+        SELECT p.product_id, p.product_name, il.quantity, il.unit_price, i.total, i.date, i.customer_id
+        FROM products p 
+        JOIN invoice_line il ON p.product_id = il.product_id
+        JOIN invoice i ON il.invoice_id = i.invoice_id
         WHERE p.product_id = {0};'''.format(pid)
     
     return execute_query(query)
