@@ -7,26 +7,27 @@
 from src import create_app
 
 """
-Routes we need:
+Routes:
 
 /products                       done
-/<product-name>                 done
-/<product-name>/categories      done
-/<product-name>/reviews         done
-/<product-name>/sale-data       d
+/<product-id>                   done
+/<product-id>/categories        done
+/<product-id>/reviews           done
+/<product-id>/sale-data         done
 
 /customers                      done
-/<customer-name>                done
-/<customer-name>/invoices       done
-/<customer-name>/reviews        done
+/<customer-id>                  done
+/<customer-id>/invoices         done
+/<customer-id>/reviews          done
 
-/suppliers                      d
-/<supplier-name>                d
-/<supplier-name>/products       d
-/<supplier-name>/sale-data      d
+/suppliers                      done
+/<supplier-id>                  done
+/<supplier-id>/products         done
+/<supplier-id>/company          done
+/<supplier-id>/sale-data        done
 
 /invoices                       d
-/<invoice-name>                 d
+/<invoice-id>                   d
 
 /categories                     done
 /categories/<cid>               done
