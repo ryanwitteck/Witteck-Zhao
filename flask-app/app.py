@@ -26,9 +26,6 @@ Routes:
 /<supplier-id>/company          done
 /<supplier-id>/sale-data        done
 
-/invoices                       d
-/<invoice-id>                   d
-
 /categories                     done
 /categories/<cid>               done
 /categories/<cid>/products      done
