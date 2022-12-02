@@ -1,61 +1,60 @@
 from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
+from src.debug import execute_query
 
 
 products = Blueprint('products', __name__)
 
 # Get all the products from the database
-@products.route('/products', methods=['GET'])
+@products.route('/', methods=['GET'])
 def get_products():
-    # get a cursor object from the database
-    cursor = db.get_db().cursor()
+    query = 'select * from products'
 
-    # use cursor to query the database for a list of products
-    cursor.execute('select * from products')
+    return execute_query(query)
 
-    # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
-
-    # create an empty dictionary object to use in 
-    # putting column headers together with data
-    json_data = []
-
-    # fetch all the data from the cursor
-    theData = cursor.fetchall()
-
-    # for each of the rows, zip the data elements together with
-    # the column headers. 
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
-
-    return jsonify(json_data)
-
-# get the top 5 products from the database
-@products.route('/top5products')
+# get the top 5 products from the database -- NOT FULLY TESTED
+@products.route('/top5')
 def get_most_pop_products():
-    cursor = db.get_db().cursor()
     query = '''
-        SELECT p.product_id, product_name, sum(quantityOrdered) as totalOrders
+        SELECT p.product_id, product_name, sum(il.quantity) as totalOrders
         FROM products p JOIN invoice_line il on p.product_id = il.product_id
         GROUP BY p.product_id, product_name
         ORDER BY totalOrders DESC
         LIMIT 5;
     '''
-    cursor.execute(query)
-       # grab the column headers from the returned data
-    column_headers = [x[0] for x in cursor.description]
+    
+    return execute_query(query)
 
-    # create an empty dictionary object to use in 
-    # putting column headers together with data
-    json_data = []
+# get the data for a specific product from the database using its id
+@products.route('/<productID>')
+def get_specific_product(productID):
+    query = '''
+        SELECT * FROM products
+        WHERE product_id = {0};
+    '''.format(productID)
 
-    # fetch all the data from the cursor
-    theData = cursor.fetchall()
+    return execute_query(query)
 
-    # for each of the rows, zip the data elements together with
-    # the column headers. 
-    for row in theData:
-        json_data.append(dict(zip(column_headers, row)))
+# Get a products's categories for product with particular ID -- NOT FULLY TESTED
+@products.route('/<pid>/categories', methods=['GET'])
+def get_product_categories(pid):
+    query = '''
+        SELECT p.product_id, p.product_name, c.name as category
+        FROM products p
+        NATURAL JOIN category_product
+        NATURAL JOIN category c
+        WHERE p.product_id = {0};'''.format(pid)
+    
+    return execute_query(query)
 
-    return jsonify(json_data)
+# Get a products's reviews for product with particular ID -- DOES NOT QUERY ALL DESIRED INFORMATION
+@products.route('/<pid>/reviews', methods=['GET'])
+def get_product_reviews(pid):
+    query = '''
+        SELECT p.product_id, p.product_name, r.review_id
+        FROM products p 
+        JOIN reviews r ON p.product_id = r.product_id
+        WHERE p.product_id = {0};'''.format(pid)
+    
+    return execute_query(query)
