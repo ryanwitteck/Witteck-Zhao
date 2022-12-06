@@ -9,7 +9,7 @@ categories = Blueprint('categories', __name__)
 # Get all the categories from the database
 @categories.route('/', methods=['GET'])
 def get_categories():
-    query = 'select * from category'
+    query = 'select category_id, name from category'
 
     return execute_query(query)
 
@@ -27,7 +27,7 @@ def get_specific_category(cid):
 @categories.route('/<cid>/products', methods=['GET'])
 def get_category_products(cid):
     query = '''
-        SELECT c.name as category, p.product_id, p.product_name
+        SELECT c.name as category, p.*
         FROM category c
         NATURAL JOIN category_product
         NATURAL JOIN products p
