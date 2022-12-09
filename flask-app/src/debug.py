@@ -13,8 +13,12 @@ def tester():
 # execute querry on the database
 def execute_query(query):
     cursor = db.get_db().cursor()
-    cursor.execute(query)
-       # grab the column headers from the returned data
+    try:
+        cursor.execute(query)
+    except:
+        return '<h1>Failed Query</h1>'
+
+    # grab the column headers from the returned data
     row_headers = [x[0] for x in cursor.description]
 
     # create an empty dictionary object to use in 
