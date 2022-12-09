@@ -171,7 +171,6 @@ insert into category (category_id, name) values (3, 'computers');
 insert into category (category_id, name) values (4, 'toys');
 insert into category (category_id, name) values (5, 'clothing');
 
-
 insert into category_product (product_id, category_id) values (1, 1);
 insert into category_product (product_id, category_id) values (2, 2);
 insert into category_product (product_id, category_id) values (3, 3);
@@ -196,8 +195,83 @@ insert into invoice_line (invoice_line_id, unit_price, quantity, invoice_id, pro
 insert into invoice_line (invoice_line_id, unit_price, quantity, invoice_id, product_id) values (4, 59247.11, 5, 4, 4);
 insert into invoice_line (invoice_line_id, unit_price, quantity, invoice_id, product_id) values (5, 37255.13, 44, 5, 5);
 
-insert into reviews (review_id, title, description, rating, product_id, customer_id) values (1, 'info-mediaries', 'ac nibh fusce lacus purus aliquet at feugiat non pretium quis', 1, 1, 5);
-insert into reviews (review_id, title, description, rating, product_id, customer_id) values (2, 'productivity', 'faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin', 1, 2, 3);
-insert into reviews (review_id, title, description, rating, product_id, customer_id) values (3, 'Cross-platform', 'magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis', 1, 1, 3);
-insert into reviews (review_id, title, description, rating, product_id, customer_id) values (4, 'Cross-group', 'sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa', 2, 4, 5);
-insert into reviews (review_id, title, description, rating, product_id, customer_id) values (5, 'uniform', 'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel', 4, 5, 2);
+insert into reviews (title, description, rating, product_id, customer_id) values ('info-mediaries', 'ac nibh fusce lacus purus aliquet at feugiat non pretium quis', 1, 1, 5);
+insert into reviews (title, description, rating, product_id, customer_id) values ('productivity', 'faucibus orci luctus et ultrices posuere cubilia curae nulla dapibus dolor vel est donec odio justo sollicitudin', 1, 2, 3);
+insert into reviews (title, description, rating, product_id, customer_id) values ('Cross-platform', 'magna vulputate luctus cum sociis natoque penatibus et magnis dis parturient montes nascetur ridiculus mus vivamus vestibulum sagittis sapien cum sociis', 1, 1, 3);
+insert into reviews (title, description, rating, product_id, customer_id) values ('Cross-group', 'sit amet sem fusce consequat nulla nisl nunc nisl duis bibendum felis sed interdum venenatis turpis enim blandit mi in porttitor pede justo eu massa', 2, 4, 5);
+insert into reviews (title, description, rating, product_id, customer_id) values ('uniform', 'morbi non quam nec dui luctus rutrum nulla tellus in sagittis dui vel', 4, 5, 2);
+
+
+/*
+-- LOGIN STUFF - incomplete
+
+-- Table of users
+create table users (
+    userID INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    passwordHash BINARY(64) NOT NULL,
+    firstName VARCHAR(50) NULL,
+    lastName VARCHAR(50) NULL,
+	salt BINARY(16) NOT NULL
+);
+
+-- Procedure for adding new users
+create procedure uspAddUser (
+    IN loginName VARCHAR(50), 
+    IN passwd VARCHAR(50),
+    IN firstName VARCHAR(50), 
+    IN lastName VARCHAR(50),
+    OUT responseMessage VARCHAR(250)
+)
+BEGIN
+    DECLARE salt BINARY(16);
+	SET salt = guid();
+
+    BEGIN TRY
+        INSERT INTO users (email, passwordHash, firstName, lastName, salt);
+        VALUES(loginName, HASHBYTES('SHA2_512', passwd+CAST(salt AS VARCHAR(36))), firstName, lastName, salt);
+
+       SET responseMessage='Success';
+    END TRY;
+    BEGIN CATCH
+        SET responseMessage=ERROR_MESSAGE();
+    END CATCH;
+
+END;
+
+-- Add admin user
+declare @resMessage VARCHAR(250);
+
+exec uspAddUser (
+          loginName = N'Admin',
+          passwd = N'123',
+          firstName = N'Admin',
+          lastName = N'Administrator',
+          responseMessage=@resMessage OUTPUT);
+
+-- create login procedure
+create procedure uspLogin (
+    IN loginName VARCHAR(254),
+    IN passwd VARCHAR(50),
+    OUT responseMessage VARCHAR(250)=''
+)
+BEGIN
+
+    SET NOCOUNT ON
+
+    DECLARE userID INT
+
+    IF EXISTS (SELECT TOP 1 userID FROM users WHERE email=loginName)
+    BEGIN
+        SET userID=(SELECT userID FROM users WHERE email=loginName AND PasswordHash=HASHBYTES('SHA2_512', @pPassword+CAST(Salt AS VARCHAR(36))))
+
+       IF(userID IS NULL)
+           SET responseMessage='Incorrect password'
+       ELSE 
+           SET responseMessage='User successfully logged in'
+    END
+    ELSE
+       SET responseMessage='Invalid login'
+
+END;
+*/
