@@ -24,15 +24,19 @@ create table products (
 	description VARCHAR(50) NOT NULL,
 	unit_price DECIMAL(5,2) NOT NULL,
 	quantity INTEGER NOT NULL,
-	rating INTEGER NOT NULL,
+	rating INTEGER,
 	constraint fk_1
 		foreign key (supplier_id) references supplier (supplier_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table product_image (
 	product_image_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	product_id INTEGER UNIQUE NOT NULL,
 	constraint fk_2
 		foreign key (product_id) references products (product_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table company (
 	company_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -45,6 +49,8 @@ create table company (
 	zip_code VARCHAR(50),
 	constraint fk_3
 		foreign key (supplier_id) references supplier (supplier_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table sales_rep (
 	sales_rep_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -65,9 +71,13 @@ create table supplier_rep (
 	sales_rep_id INTEGER NOT NULL UNIQUE,
 	PRIMARY KEY (supplier_id, sales_rep_id),
 	constraint fk_4
-		foreign key (supplier_id) references supplier (supplier_id),
+		foreign key (supplier_id) references supplier (supplier_id)
+		on update CASCADE
+		on delete RESTRICT,
 	constraint fk_5
 		foreign key (sales_rep_id) references sales_rep (sales_rep_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table customers (
     customer_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -85,7 +95,7 @@ create table customers (
 create table invoice (
 	invoice_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	customer_id INTEGER NOT NULL,
-	date DATE NOT NULL,
+	date DATETIME DEFAULT CURRENT_TIMESTAMP,
 	total DECIMAL(7,2) NOT NULL,
 	billing_address VARCHAR(50) NOT NULL,
 	billing_city VARCHAR(50) NOT NULL,
@@ -94,6 +104,8 @@ create table invoice (
 	billing_zip VARCHAR(50) NOT NULL,
 	constraint fk_6
 		foreign key (customer_id) references customers (customer_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table invoice_line (
 	invoice_line_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -102,9 +114,13 @@ create table invoice_line (
 	invoice_id INTEGER NOT NULL,
 	product_id INTEGER NOT NULL,
 	constraint fk_7
-		foreign key (invoice_id) references invoice (invoice_id),
+		foreign key (invoice_id) references invoice (invoice_id)
+		on update CASCADE
+		on delete RESTRICT,
 	constraint fk_8
 		foreign key (product_id) references products (product_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table category (
 	category_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -115,9 +131,13 @@ create table category_product (
 	category_id INTEGER NOT NULL UNIQUE,
 	PRIMARY KEY (product_id, category_id),
 	constraint fk_9
-		foreign key (category_id) references category (category_id),
+		foreign key (category_id) references category (category_id)
+		on update CASCADE
+		on delete RESTRICT,
 	constraint fk_10
 		foreign key (product_id) references products (product_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 create table reviews (
 	review_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
@@ -127,9 +147,13 @@ create table reviews (
 	description TEXT NOT NULL ,
 	rating INTEGER NOT NULL,
 	constraint fk_11
-		foreign key (product_id) references products (product_id),
+		foreign key (product_id) references products (product_id)
+		on update CASCADE
+		on delete RESTRICT,
 	constraint fk_12
 		foreign key (customer_id) references customers (customer_id)
+		on update CASCADE
+		on delete RESTRICT
 );
 
 insert into sales_rep
@@ -183,11 +207,11 @@ insert into customers (customer_id, first_name, last_name, address, city, state,
 insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (4, 'Sheff', 'Balnave', '7 Hauk Lane', 'Takamatsu-shi', null, 'Japan', '86274', '463-884-8386', 'sbalnave3@slideshare.net', '401-561-0785');
 insert into customers (customer_id, first_name, last_name, address, city, state, country, zip_code, phone_number, email, fax) values (5, 'Nickolaus', 'MacGaughie', '4 Wayridge Street', 'Dajing', null, 'China', '64738', '763-779-0176', 'nmacgaughie4@forbes.com', '372-397-2821');
 
-insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (1, 1,  '2022-6-25', 5018.71, '06 Hooker Place', 'Sishiba', null, 'China', '63167');
-insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (2, 2,  '2021-1-26', 2917.38, '8 Hanover Junction', 'Baitashan', null, 'China', '10862');
-insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (3, 3, '2021-5-16', 1314.58, '7737 Redwing Terrace', 'Shengze', null, 'China', '21709');
-insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (4, 4, '2021-2-13', 3249.73, '15 Cody Way', 'Nýdek', null, 'Czech Republic', '60625');
-insert into invoice (invoice_id, customer_id,  date, total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (5, 5,  '2021-8-29', 9752.87, '70420 Fuller Lane', 'Orleans', null, 'Brazil', '26765');
+insert into invoice (invoice_id, customer_id,  total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (1, 1, 5018.71, '06 Hooker Place', 'Sishiba', null, 'China', '63167');
+insert into invoice (invoice_id, customer_id,  total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (2, 2, 2917.38, '8 Hanover Junction', 'Baitashan', null, 'China', '10862');
+insert into invoice (invoice_id, customer_id,  total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (3, 3, 1314.58, '7737 Redwing Terrace', 'Shengze', null, 'China', '21709');
+insert into invoice (invoice_id, customer_id,  total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (4, 4, 3249.73, '15 Cody Way', 'Nýdek', null, 'Czech Republic', '60625');
+insert into invoice (invoice_id, customer_id,  total, billing_address, billing_city, billing_state, billing_country, billing_zip) values (5, 5, 9752.87, '70420 Fuller Lane', 'Orleans', null, 'Brazil', '26765');
 
 insert into invoice_line (invoice_line_id, unit_price, quantity, invoice_id, product_id) values (1, 265.55, 44, 1, 1);
 insert into invoice_line (invoice_line_id, unit_price, quantity, invoice_id, product_id) values (2, 97686.51, 36, 2, 2);
