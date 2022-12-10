@@ -74,5 +74,8 @@ def get_product_sales(pid):
 # Add a new product to the database
 @products.route('/add-product', methods=['POST'])
 def add_product():
-    current_app.logger.info(request.form)
+    app.logger.info(request.form)
+
+    
+
     return 'hello'
