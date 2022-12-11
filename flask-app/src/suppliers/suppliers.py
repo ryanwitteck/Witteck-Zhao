@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
-from src.debug import execute_query
+from src.utils import execute_query
 
 
 suppliers = Blueprint('suppliers', __name__)
