@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
-from src.debug import execute_query
+from src.utils import execute_query
 
 
 products = Blueprint('products', __name__)
@@ -74,8 +74,16 @@ def get_product_sales(pid):
 # Add a new product to the database
 @products.route('/add-product', methods=['POST'])
 def add_product():
-    app.logger.info(request.form)
+    pname = request.form.get('product_name')
+    sid = request.form.get('supplier_id')
+    description = request.form.get('description')
+    unit_price = request.form.get('unit_price')
+    quantity = request.form.get('quantity')
 
-    
-
-    return 'hello'
+    return '''
+        product name = {}
+        supplier id = {}
+        description = {}
+        unit price = {}
+        quantity = {}
+    '''.format(pname, sid, description, unit_price, quantity)
