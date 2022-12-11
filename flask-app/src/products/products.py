@@ -91,13 +91,11 @@ def add_product():
 
     # create new category relations
     try:
-        log = ""
         for v in request.form.get('categories')[1::2]:
             id_data = '({0},{1})'.format(pid, v)
-            r = add_item('category_product', ['product_id','category_id'], id_data)
-            log += '(' + ','.join(map(str, ['product_id','category_id'])) + ') ' + id_data + ' ' + r + '\n'
+            add_item('category_product', ['product_id','category_id'], id_data)
 
-        return 'successfully added product: {0}, pid: {1}\nlog:\n{2}'.format(values[0], pid, log)
+        return 'successfully added product: {0}, pid: {1}'.format(values[0], pid)
     except:
         return 'failed to add category relations'
 
