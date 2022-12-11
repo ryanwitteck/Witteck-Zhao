@@ -1,7 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
-from src.debug import execute_query
+from src.utils import execute_query
 
 
 categories = Blueprint('categories', __name__)
@@ -9,7 +9,7 @@ categories = Blueprint('categories', __name__)
 # Get all the categories from the database
 @categories.route('/', methods=['GET'])
 def get_categories():
-    query = 'select category_id, name from category'
+    query = 'select category_id as value, name as label from category'
 
     return execute_query(query)
 
@@ -30,7 +30,7 @@ def get_category_products(cid):
         SELECT c.name as category, p.*
         FROM category c
         NATURAL JOIN category_product
-        NATURAL JOIN products p
+        NATURAL JOIN product p
         WHERE c.category_id = {0};'''.format(cid)
     
     return execute_query(query)
