@@ -19,7 +19,7 @@ def execute_query(query):
 
     # fetch all the data from the cursor
     theData = cursor.fetchall()
-
+    
     # for each of the rows, zip the data elements together with
     # the column headers. 
     for row in theData:
@@ -41,9 +41,15 @@ def add_item(table_name, params, values_line):
     try:
         cursor.execute(command)
         cursor.execute('COMMIT')
-        return 'executed:\n{0}'.format(command)
     except:
-        return 'error failed to execute:\n{0}'.format(command)
+        return 'execution error'
+
+    try:
+        cursor.execute('SELECT {0}_id FROM {0} ORDER BY {0}_id DESC LIMIT 1;'.format(table_name))
+        id_str = str(cursor.fetchone())
+        return id_str[1:len(id_str) - 2]
+    except:
+        return 'query error'
 
 # edit an entry in a table
 def update_table_entry(table_name, param, value, id_str, id):
@@ -55,6 +61,6 @@ def update_table_entry(table_name, param, value, id_str, id):
     try:
         cursor.execute(command)
         cursor.execute('COMMIT')
-        return 'executed:\n{0}'.format(command)
+        return 'success'
     except:
-        return 'error failed to execute:\n{0}'.format(command)
+        return 'error'
