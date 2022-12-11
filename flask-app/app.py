@@ -6,32 +6,6 @@
 # that lives in src/__init__.py
 from src import create_app
 
-"""
-Routes:
-
-/products                       done
-/<product-id>                   done
-/<product-id>/categories        done
-/<product-id>/reviews           done
-/<product-id>/sale-data         done
-
-/customers                      done
-/<customer-id>                  done
-/<customer-id>/invoices         done
-/<customer-id>/reviews          done
-
-/suppliers                      done
-/<supplier-id>                  done
-/<supplier-id>/products         done
-/<supplier-id>/company          done
-/<supplier-id>/sale-data        done
-
-/categories                     done
-/categories/<cid>               done
-/categories/<cid>/products      done
-"""
-
-
 # create the app object
 app = create_app()
 
