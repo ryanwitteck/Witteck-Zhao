@@ -29,3 +29,17 @@ def execute_query(query):
     the_response.mimetype = 'application/json'
     return the_response
 
+# add a new item into the given table
+def add_item(table_name, params, values_line):
+
+    param_line = ','.join(map(str, params))
+
+    command = 'INSERT INTO {} ({}) VALUES {};'.format(table_name, param_line, values_line)
+
+    cursor = db.get_db().cursor()
+
+    try:
+        cursor.execute(command)
+        return 'executed:\n{}'.format(command)
+    except:
+        return 'error failed to execute:\n{}'.format(command)
