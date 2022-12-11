@@ -28,7 +28,7 @@ def get_specific_supplier(sid):
 def get_supplier_products(sid):
     query = '''
         SELECT s.supplier_id, p.product_id, p.product_name, p.rating FROM supplier s
-        NATURAL JOIN products p
+        NATURAL JOIN product p
         WHERE s.supplier_id = {0};'''.format(sid)
 
     return execute_query(query)
@@ -50,7 +50,7 @@ def get_product_sales(sid):
         SELECT s.supplier_id, p.product_id, p.product_name, il.quantity, il.unit_price, i.total, i.date, i.customer_id
         FROM supplier s
         JOIN company c ON s.supplier_id = c.supplier_id
-        JOIN products p ON s.supplier_id = p.supplier_id
+        JOIN product p ON s.supplier_id = p.supplier_id
         JOIN invoice_line il ON p.product_id = il.product_id
         JOIN invoice i ON il.invoice_id = i.invoice_id
         WHERE s.supplier_id = {0};'''.format(sid)
