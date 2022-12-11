@@ -68,8 +68,8 @@ create table sales_rep (
 	zip_code VARCHAR(50) NOT NULL
 );
 create table supplier_rep (
-	supplier_id INTEGER NOT NULL UNIQUE,
-	sales_rep_id INTEGER NOT NULL UNIQUE,
+	supplier_id INTEGER NOT NULL,
+	sales_rep_id INTEGER NOT NULL,
 	PRIMARY KEY (supplier_id, sales_rep_id),
 	constraint fk_4
 		foreign key (supplier_id) references supplier (supplier_id)
@@ -128,8 +128,8 @@ create table category (
 	name VARCHAR(11) NOT NULL
 );
 create table category_product (
-	product_id INTEGER NOT NULL UNIQUE,
-	category_id INTEGER NOT NULL UNIQUE,
+	product_id INTEGER NOT NULL,
+	category_id INTEGER NOT NULL,
 	PRIMARY KEY (product_id, category_id),
 	constraint fk_9
 		foreign key (category_id) references category (category_id)
