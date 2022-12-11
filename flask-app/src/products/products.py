@@ -32,7 +32,7 @@ def get_most_pop_products():
 @products.route('/<productID>')
 def get_specific_product(productID):
     query = '''
-        SELECT * FROM products
+        SELECT * FROM product
         WHERE product_id = {0};
     '''.format(productID)
 
@@ -82,20 +82,24 @@ def add_product():
     for p in params:
         values.append(request.form.get(p))
     
-    values_line = '(\'{}\',{},\'{}\',{},{})'.format(values[0], values[1], values[2], values[3], values[4])
+    values_line = '(\'{0}\',{1},\'{2}\',{3},{4})'.format(values[0], values[1], values[2], values[3], values[4])
 
     try:
         pid = add_item('product', params, values_line)
     except:
-        return 'fail'
+        return 'failed to add product'
 
     # create new category relations
     try:
+        log = ""
+        for v in request.form.get('categories')[1::2]:
+            id_data = '({0},{1})'.format(pid, v)
+            r = add_item('category_product', ['product_id','category_id'], id_data)
+            log += '(' + ','.join(map(str, ['product_id','category_id'])) + ') ' + id_data + ' ' + r + '\n'
 
-
-        return pid
+        return 'successfully added product: {0}, pid: {1}\nlog:\n{2}'.format(values[0], pid, log)
     except:
-        return 'fail 2'
+        return 'failed to add category relations'
 
 # Change the price of a product
 @products.route('/change-price', methods=['POST'])
