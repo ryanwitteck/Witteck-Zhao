@@ -9,12 +9,12 @@ suppliers = Blueprint('suppliers', __name__)
 # Get all the suppliers from the database
 @suppliers.route('/', methods=['GET'])
 def get_suppliers():
-    query = 'select * from supplier'
+    query = 'select s.*, c.company_name from supplier s natural join company c'
 
     return execute_query(query)
 
 # get the data for a specific supplier from the database using its id
-@suppliers.route('/<sid>')
+@suppliers.route('/<sid>', methods=['GET'])
 def get_specific_supplier(sid):
     query = '''
         SELECT s.*, c.company_id, c.company_name FROM supplier s

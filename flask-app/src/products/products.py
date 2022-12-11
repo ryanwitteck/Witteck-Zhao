@@ -15,7 +15,7 @@ def get_products():
     return execute_query(query)
 
 # get all products that are pending approval
-@products.route('/get_unapproved', methods=['GET'])
+@products.route('/unapproved', methods=['GET'])
 def get_unapproved():
     query = 'select * from product where is_approved = 0'
 
