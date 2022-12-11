@@ -40,7 +40,7 @@ def add_item(table_name, params, values_line):
 
     try:
         cursor.execute(command)
-        cursor.execute('COMMIT')
+        cursor.execute('COMMIT;')
     except:
         return 'execution error'
 
@@ -49,7 +49,7 @@ def add_item(table_name, params, values_line):
         id_str = str(cursor.fetchone())
         return int(id_str[1:len(id_str) - 2])
     except:
-        return 'query error'
+        return 'unable to return id'
 
 # edit an entry in a table
 def update_table_entry(table_name, param, value, id_str, id):
