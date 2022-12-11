@@ -14,6 +14,12 @@ def get_products():
 
     return execute_query(query)
 
+
+@products.route('/get_unapproved', methods=['GET'])
+def get_unapproved():
+    query = 'select * from product where is_approved = 0'
+
+    return execute_query(query)
 # get the top 5 products from the database -- NOT FULLY TESTED
 @products.route('/top5')
 def get_most_pop_products():
@@ -106,3 +112,9 @@ def change_price():
     pid = request.form.get('product_id')
 
     return update_table_entry('product', 'unit_price', new_price, 'product_id', pid)
+
+# Change the price of a product
+@products.route('/approve-product', methods=['POST'])
+def approve_product():
+    pid = request.form.get('product_id')
+    return update_table_entry('product', 'is_approved', 1, 'product_id', pid)
