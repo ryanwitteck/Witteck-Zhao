@@ -34,12 +34,25 @@ def add_item(table_name, params, values_line):
 
     param_line = ','.join(map(str, params))
 
-    command = 'INSERT INTO {} ({}) VALUES {};'.format(table_name, param_line, values_line)
+    command = 'INSERT INTO {0} ({1}) VALUES {2};'.format(table_name, param_line, values_line)
 
     cursor = db.get_db().cursor()
 
     try:
         cursor.execute(command)
-        return 'executed:\n{}'.format(command)
+        return 'executed:\n{0}'.format(command)
     except:
-        return 'error failed to execute:\n{}'.format(command)
+        return 'error failed to execute:\n{0}'.format(command)
+
+# edit an entry in a table
+def update_table_entry(table_name, param, value, id_str, id):
+
+    command = 'UPDATE {0} SET {1} = {2} WHERE {3} = {4};'.format(table_name, param, value, id_str, id)
+
+    cursor = db.get_db().cursor()
+
+    try:
+        cursor.execute(command)
+        return 'executed:\n{0}'.format(command)
+    except:
+        return 'error failed to execute:\n{0}'.format(command)

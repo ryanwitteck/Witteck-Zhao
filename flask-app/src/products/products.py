@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
 from src.utils import execute_query
-from src.utils import add_item
+from src.utils import add_item, update_table_entry
 
 
 products = Blueprint('products', __name__)
@@ -83,3 +83,12 @@ def add_product():
     values_line = '(\'{}\',{},\'{}\',{},{})'.format(values[0], values[1], values[2], values[3], values[4])
 
     return add_item('products', params, values_line)
+
+# Change the price of a product
+@products.route('/change-price', methods=['POST'])
+def change_price():
+    new_price = request.form.get('unit_price')
+    pid = request.form.get('product_id')
+
+
+    return update_table_entry('products', 'unit_price', new_price, 'product_id', pid)
