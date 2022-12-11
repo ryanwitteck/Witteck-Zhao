@@ -35,7 +35,7 @@ create table product_image (
 	product_image_id INTEGER PRIMARY KEY AUTO_INCREMENT NOT NULL,
 	product_id INTEGER UNIQUE NOT NULL,
 	constraint fk_2
-		foreign key (product_id) references products (product_id)
+		foreign key (product_id) references product (product_id)
 		on update CASCADE
 		on delete RESTRICT
 );
@@ -104,7 +104,7 @@ create table invoice (
 	billing_country VARCHAR(50) NOT NULL,
 	billing_zip VARCHAR(50) NOT NULL,
 	constraint fk_6
-		foreign key (customer_id) references customers (customer_id)
+		foreign key (customer_id) references customer (customer_id)
 		on update CASCADE
 		on delete RESTRICT
 );
@@ -119,7 +119,7 @@ create table invoice_line (
 		on update CASCADE
 		on delete RESTRICT,
 	constraint fk_8
-		foreign key (product_id) references products (product_id)
+		foreign key (product_id) references product (product_id)
 		on update CASCADE
 		on delete RESTRICT
 );
@@ -136,7 +136,7 @@ create table category_product (
 		on update CASCADE
 		on delete RESTRICT,
 	constraint fk_10
-		foreign key (product_id) references products (product_id)
+		foreign key (product_id) references product (product_id)
 		on update CASCADE
 		on delete RESTRICT
 );
@@ -148,11 +148,11 @@ create table review (
 	description TEXT NOT NULL ,
 	rating INTEGER NOT NULL,
 	constraint fk_11
-		foreign key (product_id) references products (product_id)
+		foreign key (product_id) references product (product_id)
 		on update CASCADE
 		on delete RESTRICT,
 	constraint fk_12
-		foreign key (customer_id) references customers (customer_id)
+		foreign key (customer_id) references customer (customer_id)
 		on update CASCADE
 		on delete RESTRICT
 );
