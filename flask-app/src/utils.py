@@ -40,6 +40,7 @@ def add_item(table_name, params, values_line):
 
     try:
         cursor.execute(command)
+        cursor.execute('COMMIT')
         return 'executed:\n{0}'.format(command)
     except:
         return 'error failed to execute:\n{0}'.format(command)
@@ -53,6 +54,7 @@ def update_table_entry(table_name, param, value, id_str, id):
 
     try:
         cursor.execute(command)
+        cursor.execute('COMMIT')
         return 'executed:\n{0}'.format(command)
     except:
         return 'error failed to execute:\n{0}'.format(command)
