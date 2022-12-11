@@ -27,8 +27,8 @@ def get_specific_supplier(sid):
 @suppliers.route('/<sid>/products')
 def get_supplier_products(sid):
     query = '''
-        SELECT s.supplier_id, p.product_id, p.product_name, p.rating FROM supplier s
-        NATURAL JOIN product p
+        SELECT s.supplier_id, p.* FROM supplier s
+        JOIN product p ON p.supplier_id = s.supplier_id
         WHERE s.supplier_id = {0};'''.format(sid)
 
     return execute_query(query)

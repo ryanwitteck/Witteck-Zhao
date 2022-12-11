@@ -1,8 +1,7 @@
 from flask import Blueprint, request, jsonify, make_response
 import json
 from src import db
-from src.utils import execute_query, add_item, update_table_entry
-
+from src.utils import execute_query, add_item, calc_product_rating
 
 customers = Blueprint('customers', __name__)
 
@@ -57,6 +56,7 @@ def post_customer_review():
 
     try:
         add_item('review', params, values_line)
-        return 'success'
     except:
         return 'failed to add review'
+        
+    return calc_product_rating(values[0])

@@ -1,5 +1,4 @@
-from flask import Blueprint, request, jsonify, make_response
-import json
+from flask import jsonify, make_response
 from src import db
 
 # execute querry on the database
@@ -55,8 +54,10 @@ def add_item(table_name, params, values_line):
 def update_table_entry(table_name, param, value, id_str, id):
 
     command = 'UPDATE {0} SET {1} = {2} WHERE {3} = {4};'.format(table_name, param, value, id_str, id)
+    print(command + '\n')
 
     cursor = db.get_db().cursor()
+    print('passed cursor\n')
 
     try:
         cursor.execute(command)
@@ -64,3 +65,24 @@ def update_table_entry(table_name, param, value, id_str, id):
         return 'success'
     except:
         return 'error'
+
+# calculate product rating
+def calc_product_rating(pid):
+    query = '''
+    SELECT avg(rating) as rating
+    FROM review
+    WHERE product_id = {0};    
+    '''.format(pid)
+    
+    cursor = db.get_db().cursor()
+    try:
+        cursor.execute(query)
+    except:
+        return 'failed to execute query'
+
+    try:
+        pr = round(float(str(cursor.fetchone()).split('\'')[1]))
+    except:
+        return 'failed to fetch query'
+
+    return update_table_entry('product', 'rating', pr, 'product_id', pid)
