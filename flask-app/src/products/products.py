@@ -14,6 +14,17 @@ def get_products():
 
     return execute_query(query)
 
+# Get approved products from the database
+@products.route('/browse', methods=['GET', 'POST'])
+def get_approved():
+    likeness = request.form.get('like_str')
+
+    query = 'select * from product where is_approved'
+    if likeness != None:
+        query += ' and product_name LIKE \'%{0}%\''.format(likeness)
+
+    return execute_query(query)
+
 # get all products that are pending approval
 @products.route('/unapproved', methods=['GET'])
 def get_unapproved():
@@ -114,8 +125,41 @@ def change_price():
 
     return update_table_entry('product', 'unit_price', new_price, 'product_id', pid)
 
+
+# Change the name of a product
+@products.route('/change-name', methods=['POST'])
+def change_name():
+    new_name = request.form.get('product_name')
+    pid = request.form.get('product_id')
+
+    return update_table_entry('product', 'product_name', new_name, 'product_id', pid)
+
+
+# Change the description of a product
+@products.route('/change-desc', methods=['POST'])
+def change_desc():
+    new_desc = request.form.get('desc')
+    pid = request.form.get('product_id')
+
+    return update_table_entry('product', 'description', new_desc, 'product_id', pid)
+
+
+# Change the quantity of a product
+@products.route('/change-quantity', methods=['POST'])
+def change_quant():
+    new_quant = request.form.get('quantity')
+    pid = request.form.get('product_id')
+
+    return update_table_entry('product', 'quantity', new_quant, 'product_id', pid)
+
 # Approve a product
 @products.route('/approve-product', methods=['POST'])
 def approve_product():
     pid = request.form.get('product_id')
     return update_table_entry('product', 'is_approved', 1, 'product_id', pid)
+
+# Unapprove a product
+@products.route('/unapprove-product', methods=['POST'])
+def unapprove_product():
+    pid = request.form.get('product_id')
+    return update_table_entry('product', 'is_approved', 0, 'product_id', pid)
