@@ -54,10 +54,8 @@ def add_item(table_name, params, values_line):
 def update_table_entry(table_name, param, value, id_str, id):
 
     command = 'UPDATE {0} SET {1} = {2} WHERE {3} = {4};'.format(table_name, param, value, id_str, id)
-    print(command + '\n')
 
     cursor = db.get_db().cursor()
-    print('passed cursor\n')
 
     try:
         cursor.execute(command)
