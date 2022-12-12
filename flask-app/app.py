@@ -21,6 +21,8 @@ from src import create_app
     products/approve-product    POST
     products/unapprove-product  POST
 
+    categories/                 GET
+
     customers/                  GET
     customers/<cid>             GET
     customers/<cid>/invoices    GET
