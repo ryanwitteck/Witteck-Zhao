@@ -47,7 +47,7 @@ def get_supplier_company(sid):
 @suppliers.route('/<sid>/sales-data', methods=['GET'])
 def get_product_sales(sid):
     query = '''
-        SELECT s.supplier_id, p.product_id, p.product_name, il.quantity, il.unit_price, i.total, i.date, i.customer_id
+        SELECT p.product_name as x, i.total as y
         FROM supplier s
         JOIN company c ON s.supplier_id = c.supplier_id
         JOIN product p ON s.supplier_id = p.supplier_id
