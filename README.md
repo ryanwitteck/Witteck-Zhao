@@ -21,5 +21,10 @@ This repo contains a boilerplate setup for spinning up 2 docker containers:
 1. `pip install flask flask-mysql flask-restful cryptography flask-login`
 
 
+## Our video presentation of our Final Project:
+
+(https://www.youtube.com/watch?v=RErvMTdOHKY)
+The video runs a bit long due to some ngrok errors.
+
 
 
