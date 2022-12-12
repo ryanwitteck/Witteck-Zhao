@@ -34,18 +34,18 @@ The video runs a bit long due to some ngrok errors.
 The database is located in the witteck_zhao.sql file of the db folder.
 
 It contains the tables:
-1. supplier           \t-entries represent the suppliers of the products on our app
-2. product            \t-entries represent the products posted for sale on our app
-3. product_image      \t-entries represent images of products
-4. company            \t-entries represent the companies that suppliers are associated with
-5. sales_rep          \t-entries represent the 'moderators' of our app
-6. supplier_rep       \t-entries represent relations between suppliers and sales_reps
-7. customer           \t-entries represent customers who use our app
-8. invoice            \t-entries represent customer purchases of products
-9. invoice_line       \t-entries represent items that are a part of a certain invoice
-10. category          \t-entries represent the categories that a product could be a part of
-11. category_product  \t-entries represent relations between categories and products
-12. review            \t-entries represent reviews that customers have posted about products
+1. supplier           >-entries represent the suppliers of the products on our app
+2. product            >-entries represent the products posted for sale on our app
+3. product_image      >-entries represent images of products
+4. company            >-entries represent the companies that suppliers are associated with
+5. sales_rep          >-entries represent the 'moderators' of our app
+6. supplier_rep       >-entries represent relations between suppliers and sales_reps
+7. customer           >-entries represent customers who use our app
+8. invoice            >-entries represent customer purchases of products
+9. invoice_line       >-entries represent items that are a part of a certain invoice
+10. category          >-entries represent the categories that a product could be a part of
+11. category_product  >-entries represent relations between categories and products
+12. review            >-entries represent reviews that customers have posted about products
 
 ### The Code
 
