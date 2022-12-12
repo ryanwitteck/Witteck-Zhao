@@ -50,8 +50,9 @@ def get_most_pop_products():
 @products.route('/<productID>')
 def get_specific_product(productID):
     query = '''
-        SELECT * FROM product
-        WHERE product_id = {0};
+        SELECT p.*, pi.image_url FROM product p
+        JOIN product_image pi ON p.product_id = pi.product_id
+        WHERE p.product_id = {0};
     '''.format(productID)
 
     return execute_query(query)
@@ -106,6 +107,13 @@ def add_product():
         pid = add_item('product', params, values_line)
     except:
         return 'failed to add product'
+
+    # add image
+    try:
+        image_data = '({0},\'{1}\')'.format(pid, request.form.get('image_url'))
+        add_item('product_image', ['product_id','image_url'], image_data)
+    except:
+        return 'failed to add image'
 
     # create new category relations
     try:
